@@ -7,6 +7,7 @@ import requests
 import urllib.request
 import pymysql
 from bs4 import BeautifulSoup
+import time
 
 conn = pymysql.connect(
     host='127.0.0.1',
@@ -75,34 +76,43 @@ def detect_adult(image_url):
         sys.exit(0)
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description='Classify adult image.')
-    parser.add_argument('image_url', type=str, nargs='?', default="http://t1.daumcdn.net/alvolo/_vision/openapi/r2/images/10.jpg")
-    args = parser.parse_args()
-    detect_adult(args.image_url)
-
-    curs = conn.cursor()
-    sql = '''
-        select file_name
-        from picture
-        where normal is null or soft is null or adult is null;
-    '''
-    curs.execute(sql)
-    rows = curs.fetchall()
-    rows = list(rows)
-    print(rows)
-
-    for i in range(0, len(rows)):
+    #parser = argparse.ArgumentParser(description='Classify adult image.')
+    #parser.add_argument('image_url', type=str, nargs='?', default="http://t1.daumcdn.net/alvolo/_vision/openapi/r2/images/10.jpg")
+    #args = parser.parse_args()
+    #detect_adult(args.image_url)
+  
+    while(True):
         try:
-            url = "http://selectahn.iptime.org/collect/" + rows[i][0]
-            parser = argparse.ArgumentParser(description='Classify adult image.')
-            parser.add_argument('image_url', type=str, nargs='?', default=url)
-            args = parser.parse_args()
-            print(url)
-            FILENAME = rows[i][0]
-            detect_adult(args.image_url)
-            print("---------------------------------->")
-
+            curs = conn.cursor()
+            sql = '''
+                select file_name
+                from picture
+                where normal is null or soft is null or adult is null;
+            '''
+            curs.execute(sql)
+            rows = curs.fetchall()
+            print(len(rows))
         except BaseException:
-            print("error")
+            pass
+        if len(rows) != 0:
+            rows = list(rows)
+            print(rows)
 
+            for i in range(0, len(rows)):
+                time.sleep(5)
+                try:
+                    url = "http://selectahn.iptime.org/collect/" + rows[i][0]
+                    parser = argparse.ArgumentParser(description='Classify adult image.')
+                    parser.add_argument('image_url', type=str, nargs='?', default=url)
+                    args = parser.parse_args()
+                    print(url)
+                    FILENAME = rows[i][0]
+                    detect_adult(args.image_url)
+                    print("---------------------------------->")
 
+                except BaseException:
+                    print("error")
+            conn.close()
+        else:
+            print("time sleep 60 sec")
+            time.sleep(60)
