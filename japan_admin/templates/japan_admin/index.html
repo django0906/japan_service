@@ -1,0 +1,49 @@
+<%include file="frame_top.html"/>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+<!-- 컨텐츠 제목 --------------------------------------------------------------- [start] -->
+<div class="container-fluid">
+  <ol class="breadcrumb">
+    <!--
+    <li class="breadcrumb-item">
+      <a href="#">Dashboard</a>
+    </li>
+    -->
+    <li class="breadcrumb-item active">한자 등록상태</li>
+  </ol>
+</div>
+<!-- 컨텐츠 제목 --------------------------------------------------------------- [end] -->
+
+<div class="card mb-3" style="padding:15px; margin:15px;">
+    <table id="example" class="class=table table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>시퀀스</th>
+                <th>한자</th>
+                <th>의미</th>
+                <th>훈독</th>
+                <th>음독</th>
+                <th>수준</th>
+                <th>등록일</th>
+            </tr>
+        </thead>
+        <tbody>
+            % for item in rows:
+            <tr>
+                <td>${item['seq']}</td>
+                <td>${item['main']}</td>
+                <td>${item['mean']}</td>
+                <td>${item['um']}</td>
+                <td>${item['hun']}</td>
+                <td>${item['level']}</td>
+                <td>${item['regist_date']}</td>
+            </tr>
+            % endfor
+        </tbody>
+    </table>
+</div>
+<%include file="frame_bottom.html"/>

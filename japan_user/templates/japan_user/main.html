@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+  	<%include file="common_library.html"/>
+	<link href="https://fonts.googleapis.com/css?family=Lato:400,700" rel="stylesheet">
+	<link rel="stylesheet" href="/static/css/reset.css">
+	<link rel="stylesheet" href="/static/css/style.css">
+	<script src="/static/js/modernizr-custom.js"></script>
+	<script src="/static/js/main.js"></script> <!-- Resource jQuery -->
+
+	<title>상용한자 2136</title>
+</head>
+<style>
+.list-group-item{
+	position: unset;
+}
+</style>
+
+<script>
+	function next_button(){
+		var csrf = $('#csrf').text();
+		var page_id = $('#page_id').text();
+		page_id = parseInt(page_id);
+
+		$.post( "/main/1", {
+			   csrfmiddlewaretoken: csrf,
+		})
+	    .done(function( data ) {
+			if(page_id == data.return){
+				swal("알림", "마지막 페이지 입니다", "info");
+			}
+			else{
+				window.location.href = "/main/" + (page_id + 1);
+			}
+	    });
+
+		//window.location.href = "/main/" + (page_id + 1);
+	}
+
+	function prev_button(){
+		var page_id = $('#page_id').text();
+		page_id = parseInt(page_id);
+		if(page_id == 1){
+			swal("알림", "첫 페이지 입니다", "info");
+		}
+		else{
+			window.location.href = "/main/" + (page_id - 1);
+		}
+	}
+</script>
+
+<body>
+	<div class="top-bar">
+		<div class="top-inner">로그아웃</div>
+		<div class="top-inner">안진용</div>
+	</div>
+	<header class="cd-morph-dropdown">
+		<a href="" class="nav-trigger">Open Nav<span aria-hidden="true"></span></a>
+		
+		<nav class="main-nav">
+			<ul>
+				<li class="has-dropdown gallery" data-content="about">
+					<a href="#">About</a>
+				</li>
+
+				<li class="has-dropdown links" data-content="pricing">
+					<a href="#">상용한자</a>
+				</li>
+
+				<li class="has-dropdown button" data-content="contact">
+					<a href="#">커뮤니티</a>
+				</li>
+			</ul>
+		</nav>
+		
+		<div class="morph-dropdown-wrapper">
+			<div class="dropdown-list">
+				<ul>
+					<li id="about" class="dropdown gallery">
+						<a class="label">About</a>
+						
+						<div class="content">	
+							<ul>
+								<li>
+									<a href="#0">
+										<em>사이트 운영자</em>
+										<span>상용한자를 외우기 위해 만들었다고 하는데...</span>
+									</a>
+								</li>
+								<li>
+									<a href="#0">
+										<em>상용한자 2136</em>
+										<span>한자문화권에 속하는 각 국가에서 규정하여...</span>
+									</a>
+								</li>
+								<!--
+								<li>
+									<a href="#0">
+										<em>Title here</em>
+										<span>A brief description here</span>
+									</a>
+								</li>
+								<li>
+									<a href="#0">
+										<em>Title here</em>
+										<span>A brief description here</span>
+									</a>
+								</li>
+								-->
+							</ul>
+						</div>
+					</li>
+
+					<li id="pricing" class="dropdown links">
+						<a class="label">메뉴선택</a>
+
+						<div class="content">
+							<ul>
+								<li>
+									<h2>학년 선택</h2>
+
+									<ul class="links-list">
+										<li><a href="#0">소학교 1학년 (80개)</a></li>
+										<li><a href="#0">소학교 2학년 (160개)</a></li>
+										<li><a href="#0">소학교 3학년 (200개)</a></li>
+										<li><a href="#0">소학교 4학년 (200개)</a></li>
+										<li><a href="#0">소학교 5학년 (185개)</a></li>
+										<li><a href="#0">소학교 6학년 (181개)</a></li>
+										<li><a href="#0">중학교 (1130개)</a></li>
+									</ul>
+								</li>
+
+								<li>
+									<h2>전체 외우기</h2>
+
+									<ul class="links-list">
+										<li><a href="#0">가나다순</a></li>
+										<li><a href="#0">획순</a></li>
+									</ul>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+					<li id="contact" class="dropdown button">
+						<a class="label">자유게시판</a>
+						
+						<div class="content">
+							<!--
+							<ul class="links-list">
+								<li><a href="#0">Link #1</a></li>
+								<li><a href="#0">Link #2</a></li>
+								<li><a href="#0">Link #3</a></li>
+								<li><a href="#0">Link #4</a></li>
+								<li><a href="#0">Link #5</a></li>
+								<li><a href="#0">Link #6</a></li>
+							</ul>
+							-->
+							<a href="#0" class="btn">자유게시판</a>
+						</div>
+					</li>
+				</ul>
+
+				<div class="bg-layer" aria-hidden="true"></div>
+			</div> <!-- dropdown-list -->
+		</div> <!-- morph-dropdown-wrapper -->
+	</header>
+
+	<main class="cd-main-content">
+		<div class="japan-content">
+			<div class="word_main">${rows1[0]['main']}</div>
+
+			<ul class="list-group">
+				<li class="list-group-item list-group-item-primary">${rows1[0]['mean']}</li>
+			  <li class="list-group-item list-group-item-dark">음독</li>
+			  <li class="list-group-item">${rows1[0]['um']}</li>
+			  % for row in rows2:
+			  	<li class="list-group-item list-group-item-success">${row['word']} / ${row['hira']} / ${row['hangul']}</li>
+			  % endfor
+			</ul>
+
+			<ul class="list-group">
+			  <li class="list-group-item list-group-item-dark">훈독</li>
+			  <li class="list-group-item">${rows1[0]['hun']}</li>
+				% for row in rows3:
+			  <li class="list-group-item list-group-item-success">${row['word']} / ${row['hira']} / ${row['hangul']}</li>
+				% endfor
+			</ul>
+
+			<ul class="list-group">
+			  <li class="list-group-item list-group-item-dark">예시</li>
+				% for row in rows4:
+			  	<li class="list-group-item list-group-item-success">${row['exam']}</li>
+				<li class="list-group-item list-group-item-success">${row['hira']}</li>
+				<li class="list-group-item list-group-item-success">${row['hangul']}</li>
+				% endfor
+				<!--
+								<li class="list-group-item list-group-item-success">たくはいがとどきました</li>
+				<li class="list-group-item list-group-item-success">택배가 도착했습니다</li>
+				-->
+			</ul>
+
+			<div>
+				<button type="button" class="btn btn-secondary" id="btn_pre" onclick="prev_button()">이전으로</button>
+				<button type="button" class="btn btn-secondary" id="btn_next" onclick="next_button()">다음으로</button>
+			</div>
+
+		</div>
+	</main>
+</body>
+<div id="csrf" style="display:none">${csrf_token}</div>
+<div id="page_id" style="display:none">${page_id}</div>
+</html>

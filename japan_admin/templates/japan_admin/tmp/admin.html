@@ -1,0 +1,33 @@
+<html>
+<head>
+  <title>hello world</title>
+  <link rel="stylesheet" href="/static/css/test.css" type="text/css">
+  <script type="text/javascript" src="/static/js/test.js"></script>
+  <%include file="common_library.html"/>
+</head>
+
+<script>
+$(document).ready(function(){
+    console.log("ready");
+});
+</script>
+
+<body>
+  <h1>hello wolrd</h1>
+
+  this is engine ${engine}
+
+  <br><br>
+
+  <button type="button" class="btn btn-primary">Primary</button>
+  <button type="button" class="btn btn-secondary">Secondary</button>
+  <button type="button" class="btn btn-success">Success</button>
+  <button type="button" class="btn btn-danger">Danger</button>
+  <button type="button" class="btn btn-warning">Warning</button>
+  <button type="button" class="btn btn-info">Info</button>
+  <button type="button" class="btn btn-light">Light</button>
+  <button type="button" class="btn btn-dark">Dark</button>
+  <button type="button" class="btn btn-link">Link</button>
+</body>
+
+</html>

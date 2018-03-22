@@ -1,0 +1,47 @@
+<%include file="frame_top.html"/>
+
+<script>
+$(document).ready(function() {
+    $('#example').DataTable();
+} );
+</script>
+<!-- 컨텐츠 제목 --------------------------------------------------------------- [start] -->
+<div class="container-fluid">
+  <ol class="breadcrumb">
+    <!--
+    <li class="breadcrumb-item">
+      <a href="#">Dashboard</a>
+    </li>
+    -->
+    <li class="breadcrumb-item active">회원 관리</li>
+  </ol>
+</div>
+<!-- 컨텐츠 제목 --------------------------------------------------------------- [end] -->
+
+<div class="card mb-3" style="padding:15px; margin:15px;">
+    <table id="example" class="class=table table-bordered" cellspacing="0" width="100%">
+        <thead>
+            <tr>
+                <th>번호</th>
+                <th>이메일</th>
+                <th>사용자명</th>
+                <th>수준</th>
+                <th>회원구분</th>
+                <th>등록일</th>
+            </tr>
+        </thead>
+        <tbody>
+            % for item in rows:
+            <tr>
+                <td>${item['id']}</td>
+                <td>${item['email']}</td>
+                <td>${item['username']}</td>
+                <td>${item['level']}</td>
+                <td>${item['is_staff']}</td>
+                <td>${item['regist_date']}</td>
+            </tr>
+            % endfor
+        </tbody>
+    </table>
+</div>
+<%include file="frame_bottom.html"/>

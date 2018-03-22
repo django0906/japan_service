@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+  <meta charset="UTF-8" />
+  <title>상용한자 2136</title>
+  <%include file="common_library.html"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/static/css/login.css" type="text/css">
+  <script type="text/javascript" src="/static/js/login.js"></script>
+  <script type='text/javascript' src='/static/js/jquery.particleground.js'></script>
+</head>
+
+<body>
+
+<div id="particles">
+
+  <div id="intro">
+    <h1>상용한자 2136</h1>
+    <p>일본어 상용한자 2136개를 쉽게 외울 수 있는 웹 서비스 입니다.</p>
+    <p>君も日本漢字を覚えてることが出来るように</p>
+    <div id="hello">
+      <input type="text" name="email" id="email" tabindex="1" class="form-control" placeholder="이메일" value="">
+      <input type="password" name="password" id="password" tabindex="1" class="form-control" placeholder="비밀번호" value="">
+      <input type="password" name="password_check" id="password_check" tabindex="1" class="form-control" placeholder="비밀번호 확인" value="" style="display:none">
+      <div id = "password_notice" style="display:none">비밀번호는 단뱡향 해쉬 암호 알고리즘으로 저장되어 안전합니다.</div>
+
+      <input type="text" name="username" id="username" tabindex="1" class="form-control" placeholder="사용자 이름" value="" style="display:none">
+      <select class="form-control" id="level" style="display:none">
+        <option value="none">일본어 수준 선택</option>
+        <option value="n5">JLPT N5</option>
+        <option value="n4">JLPT N4</option>
+        <option value="n3">JLPT N3</option>
+        <option value="n2">JLPT N2</option>
+        <option value="n1">JLPT N1</option>
+        </select>
+      <input type="submit" name="login-submit" id="login-submit" tabindex="4" class="form-control btn btn-login" value="로그인" style="display:block">
+      <input type="submit" name="regist-submit" id="regist-submit" tabindex="4" class="form-control btn btn-login" value="회원가입" style="display:none">
+      <input type="submit" name="regist-submit-move" id="regist-submit-move" tabindex="4" class="form-control btn btn-login" value="회원가입 이동" style="diblock">
+      <input type="submit" name="login-submit-move" id="login-submit-move" tabindex="4" class="form-control btn btn-login" value="로그인 이동" style="display:none">
+    </div>
+  </div>
+</div>
+<div id="csrf">${csrf_token}</div>
+<div id="mode">login</div>
+
+
+</body>
+</html>
+

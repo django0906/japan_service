@@ -1,0 +1,114 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>보안뉴스 크롤링</title>
+  <%include file="common_library.html"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  .main{
+    padding:30px;
+  }
+  #search_data{
+    width:30%;
+    float: left;
+          margin-right: 5px;
+  }
+  #page_data{
+      width: 10%;
+    float: left;
+          margin-right: 5px;
+  }
+  h1{
+    margin-bottom:30px;
+  }
+table, th, td {
+    border: 1px solid #e6e6e6;
+    padding:8px;
+}
+    .result{
+        margin-bottom: 10px;
+        color: #555555;
+    }
+    #ccc{
+        font-size: 80%;
+    }
+</style>
+</head>
+
+<script>
+function move() {
+  var search_data = $('#search_data').val();
+  var page_data = $('#page_data').val();
+   var orderby = $("#orderby").is(":checked") ;
+  window.location.href = "/boan_news/" + search_data + "&" + page_data + "&" + orderby;
+}
+
+$(document).ready(function(){
+
+    $("input[id=search_data]").keydown(function (key) {
+        if(key.keyCode == 13){//키가 13이면 실행 (엔터는 13)
+            move();
+        }
+    });
+
+    $("#search_btn").click(function(){
+        move();
+        /*
+        alert(search_data);
+        $.get( "/boannews", {
+            search_data: search_data
+        })
+        .done(function( data ) {
+          console.log(data.subject_list_real);
+        });
+        */
+    });
+});
+</script>
+
+<body>
+
+<div class="main">
+  <h1>보안뉴스 크롤링</h1>
+  <div class="form-group">
+    <input type="text" class="form-control" id="search_data" aria-describedby="emailHelp" placeholder="검색어 입력">
+  <input type="text" class="form-control" id="page_data" aria-describedby="emailHelp" placeholder="페이지 갯수">
+    <button type="button" id="search_btn" class="btn btn-success">검색</button>
+      <div class="form-check">
+  <input class="form-check-input" type="checkbox" value="1" id="orderby">
+  <label class="form-check-label" id="ccc" for="orderby">
+    리버스 정렬 활성화 (검색 결과가 역순으로 출력됩니다)
+  </label>
+</div>
+    <small id="emailHelp" class="form-text text-muted">보안뉴스의 제목과 링크를 제공해드립니다</small>
+    <small id="emailHelp" class="form-text text-muted">엔터키로 검색이 가능하며 검색시간은 페이지 하나 당 3~5초가 소요됩니다</small>
+  </div>
+
+    % if cnt:
+  <div class="result">검색 결과 : <font size="4" color="red">${cnt}</font> 개</div>
+    % endif
+
+
+  % if subject_list_real and link_list_real:
+  <table>
+  <tr>
+    <th>제목</th>
+    <th>링크</th>
+  </tr>
+  % for x in range(0, len(subject_list_real)):
+  <tr>
+    <td>${subject_list_real[x]}</td>
+    <td><button type="button" class="btn btn-outline-success" onclick="window.open('http://www.boannews.com${link_list_real[x]}')">링크 이동</button></td>
+  </tr>
+  % endfor
+  % endif
+
+  </table>
+</div>
+
+
+</body>
+</html>
+

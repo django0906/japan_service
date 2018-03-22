@@ -1,0 +1,334 @@
+<%include file="frame_top.html"/>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+<style>
+    .word{
+        width:30%;
+        display: inline;
+    }
+
+    #word_label{
+        width:100%;
+    }
+
+    #um_plus{
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }
+
+    #hun_plus{
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }
+
+    #exam_plus{
+        margin-left: 10px;
+        margin-bottom: 5px;
+    }
+
+    #level{
+        margin-bottom:10px;
+    }
+
+    #frame{
+        border: solid 1px #838b94;
+        padding:1px;
+        border-radius: 5px;
+        padding-top: 5px;
+    }
+    @media only screen and (max-width: 400px) {
+        #um_plus{
+            width:90%;
+        }
+        #hun_plus{
+            width:90%;
+        }
+        #exam_plus{
+            width:90%;
+        }
+        #word {
+            width: 100%;
+        }
+    }
+</style>
+
+<script>
+function append_um_word(){
+    var html = '        <div id="frame3" style="\n' +
+            '    margin-bottom: 5px;\n' +
+            '">\n' +
+            '        <input type="text" class="form-control word um_word_hanja" id="word" placeholder="단어(한자)">\n' +
+            '        <input type="text" class="form-control word um_word_hira" id="word" placeholder="단어(히라가나)">\n' +
+            '        <input type="text" class="form-control word um_word_hangul" id="word" placeholder="단어(한글)">\n' +
+            '<button type="button" class="btn btn-outline-success" id="um_plus" onclick="append_um_word()">+</button>\n' +
+            '        </div>'
+
+        $('.um_word_label').append(html);
+}
+
+function append_hun_word(){
+    var html = '        <div id="frame3" style="\n' +
+            '    margin-bottom: 5px;\n' +
+            '">\n' +
+            '        <input type="text" class="form-control word hun_word_hanja" id="word" placeholder="단어(한자)">\n' +
+            '        <input type="text" class="form-control word hun_word_hira" id="word" placeholder="단어(히라가나)">\n' +
+            '        <input type="text" class="form-control word hun_word_hangul" id="word" placeholder="단어(한글)">\n' +
+            '<button type="button" class="btn btn-outline-success" id="um_plus" onclick="append_hun_word()">+</button>\n' +
+            '        </div>'
+
+        $('.hun_word_label').append(html);
+}
+
+function append_exam_word(){
+    var html = '        <div id="frame3" style="\n' +
+            '    margin-bottom: 5px;\n' +
+            '">\n' +
+            '        <input type="text" class="form-control word exam_word_hanja" id="word" placeholder="단어(한자)">\n' +
+            '        <input type="text" class="form-control word exam_word_hira" id="word" placeholder="단어(히라가나)">\n' +
+            '        <input type="text" class="form-control word exam_word_hangul" id="word" placeholder="단어(한글)">\n' +
+            '<button type="button" class="btn btn-outline-success" id="um_plus" onclick="append_exam_word()">+</button>\n' +
+            '        </div>'
+
+        $('.exam_word_label').append(html);
+}
+
+$(document).ready(function(){
+    $("#submit").click(function(){
+        var seq = $('#seq').val();
+        var main = $('#main').val();
+        var mean = $('#mean').val();
+        var level = $('#level').val();
+        var um = $('#um').val();
+        var hun = $('#hun').val();
+        var csrf = $('#csrf').text();
+
+        if(main == ''){
+            swal("알림", "입력값이 비어있습니다 (시퀀스 번호 입력)", "info");
+        }
+
+        else if(main == ''){
+            swal("알림", "입력값이 비어있습니다 (한자 입력)", "info");
+        }
+        else if(mean == ''){
+            swal("알림", "입력값이 비어있습니다 (뜻 입력)", "info");
+        }
+
+        console.log('seq -> ' + seq);
+        console.log('main -> ' + main);
+        console.log('mean -> ' + mean);
+        console.log('level -> ' + level);
+        console.log('um -> ' + um);
+        console.log('hun -> ' + hun);
+        console.log('----------------------------------------');
+
+        // -----------------------------------------------------------------------------------> 음독 로직
+        var um_word_len = $('.um_word_hanja').length;
+
+        console.log('um_word_len -> ' + um_word_len);
+        console.log('----------------------------------------');
+
+        var um_word = '';
+        for(var i = 0; i<um_word_len; i++){
+            var um_word_hanja = $('.um_word_hanja').eq(i).val();
+            var um_word_hira = $('.um_word_hira').eq(i).val();
+            var um_word_hangul = $('.um_word_hangul').eq(i).val();
+
+            console.log('um_word_hanja -> ' + um_word_hanja);
+            console.log('um_word_hira -> ' + um_word_hira);
+            console.log('um_word_hangul -> ' + um_word_hangul);
+
+            if(um_word_hanja != '' && um_word_hira != '' && um_word_hangul != ''){
+                um_word += um_word_hanja + '+' + um_word_hira + '+' + um_word_hangul + '/';
+            }
+            else{
+                swal("알림", "입력값이 비어있습니다 (음독 입력)", "info");
+            }
+        }
+        console.log('um_word -> ' + um_word);
+
+        // -----------------------------------------------------------------------------------> 훈독 로직
+        var hun_word_len = $('.hun_word_hanja').length;
+
+        console.log('----------------------------------------');
+        console.log('hun_word_len -> ' + hun_word_len);
+        console.log('----------------------------------------');
+
+        var hun_word = '';
+        for(var i = 0; i<hun_word_len; i++){
+            var hun_word_hanja = $('.hun_word_hanja').eq(i).val();
+            var hun_word_hira = $('.hun_word_hira').eq(i).val();
+            var hun_word_hangul = $('.hun_word_hangul').eq(i).val();
+
+            console.log('hun_word_hanja -> ' + hun_word_hanja);
+            console.log('hun_word_hira -> ' + hun_word_hira);
+            console.log('hun_word_hangul -> ' + hun_word_hangul);
+
+            if(hun_word_hanja != '' && hun_word_hira != '' && hun_word_hangul != ''){
+                hun_word += hun_word_hanja + '+' + hun_word_hira + '+' + hun_word_hangul + '/';
+            }
+            else{
+                swal("알림", "입력값이 비어있습니다 (훈독 입력)", "info");
+            }
+
+        }
+        console.log('hun_word -> ' + hun_word);
+
+        // -----------------------------------------------------------------------------------> 예시 로직
+        var exam_word_len = $('.exam_word_hanja').length;
+
+        console.log('----------------------------------------');
+        console.log('exam_word_len -> ' + exam_word_len);
+        console.log('----------------------------------------');
+
+        var exam_word = '';
+        for(var i = 0; i<exam_word_len; i++){
+            var exam_word_hanja = $('.exam_word_hanja').eq(i).val();
+            var exam_word_hira = $('.exam_word_hira').eq(i).val();
+            var exam_word_hangul = $('.exam_word_hangul').eq(i).val();
+
+            console.log('exam_word_hanja -> ' + exam_word_hanja);
+            console.log('exam_word_hira -> ' + exam_word_hira);
+            console.log('exam_word_hangul -> ' + exam_word_hangul);
+
+            if(exam_word_hanja != '' && exam_word_hira != '' && exam_word_hangul != ''){
+                exam_word += exam_word_hanja + '+' + exam_word_hira + '+' + exam_word_hangul + '/';
+            }
+            else{
+                swal("알림", "입력값이 비어있습니다 (예시 입력)", "info");
+            }
+
+        }
+        console.log('exam_word -> ' + exam_word);
+
+        $.post( "/admin/hanja_regist_view", {
+            csrfmiddlewaretoken: csrf,
+            seq: seq,
+            main: main,
+            mean: mean,
+            level: level,
+            um: um,
+            hun: hun,
+            um_word: um_word,
+            hun_word: hun_word,
+            exam_word: exam_word,
+        })
+        .done(function( data ) {
+            if(data.return == 'duplication'){
+                swal("경고", "이미 시퀀스 번호가 등록되어 있습니다", "error");
+            }
+            else{
+                //swal("완료", "한자가 성공적으로 등로되었습니다.", "success");
+                location.reload();
+            }
+        });
+    });
+
+    $("#um_plus").click(function(){
+        append_um_word();
+        $('.fist_plus_um').remove();
+    });
+
+    $("#hun_plus").click(function(){
+        append_hun_word();
+        $('.fist_plus_hun').remove();
+    });
+
+    $("#exam_plus").click(function(){
+        append_exam_word();
+        $('.fist_plus_exam').remove();
+    });
+
+});
+</script>
+
+<!-- 컨텐츠 제목 --------------------------------------------------------------- [start] -->
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <!--
+    <li class="breadcrumb-item">
+      <a href="#">Dashboard</a>
+    </li>
+    -->
+        <li class="breadcrumb-item active">한자 입력 관리 페이지</li>
+    </ol>
+</div>
+<!-- 컨텐츠 제목 --------------------------------------------------------------- [end] -->
+
+<div class="card mb-3" style="padding:15px; margin:15px;">
+
+    <div class="form-group">
+        <label for="main">시퀀스 번호 입력  <font size="1" color="blue">등록할 시퀀스 </font><font size="3" color="blue">${seq+1}</font></label>
+        <input type="text" class="form-control" id="seq" placeholder="시퀀스 번호" value="${seq+1}">
+    </div>
+
+    <div class="form-group">
+        <label for="main">한자 입력</label>
+        <input type="text" class="form-control" id="main" placeholder="한자">
+    </div>
+
+    <div class="form-group">
+        <label for="mean">뜻 입력</label>
+        <input type="text" class="form-control" id="mean" placeholder="뜻">
+    </div>
+
+    <label for="level">수준 선택</label>
+    <select class="form-control" id="level">
+        <option value="0">수준을 선택하세요</option>
+        <option value="l1">소학교 1학년</option>
+        <option value="l2">소학교 2학년</option>
+        <option value="l3">소학교 3학년</option>
+        <option value="l4">소학교 4학년</option>
+        <option value="l5">소학교 5학년</option>
+        <option value="l6">소학교 6학년</option>
+        <option value="l7">중학교</option>
+    </select>
+
+    <div class="form-group">
+        <label for="um">음독 입력</label>
+        <input type="text" class="form-control" id="um" placeholder="음독">
+    </div>
+
+    <div class="form-group">
+        <label for="hun">훈독 입력</label>
+        <input type="text" class="form-control" id="hun" placeholder="훈독">
+    </div>
+
+    <div class="form-group">
+        <label for="word" id="um_word_label">음독 단어 입력</label>
+        <div class="um_word_label" id="frame">
+            <!--
+        <input type="text" class="form-control word um_word_hanja" id="word" placeholder="단어(한자)">
+        <input type="text" class="form-control word um_word_hira" id="word" placeholder="단어(히라가나)">
+        <input type="text" class="form-control word um_word_hangul" id="word" placeholder="단어(한글)">
+            -->
+        <button type="button" class="btn btn-outline-success fist_plus_um" id="um_plus">+</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="word" id="hun_word_label">훈독 단어 입력</label>
+        <div class="hun_word_label" id="frame">
+            <!--
+        <input type="text" class="form-control word hun_word_hanja" id="word" placeholder="단어(한자)">
+        <input type="text" class="form-control word hun_word_hira" id="word" placeholder="단어(히라가나)">
+        <input type="text" class="form-control word hun_word_hangul" id="word" placeholder="단어(한글)">
+        -->
+        <button type="button" class="btn btn-outline-success fist_plus_hun" id="hun_plus">+</button>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="word" id="exam_word_label">예시 입력</label>
+        <div class="exam_word_label" id="frame">
+            <!--
+        <input type="text" class="form-control word exam_word_hanja" id="word" placeholder="단어(한자)">
+        <input type="text" class="form-control word exam_word_hira" id="word" placeholder="단어(히라가나)">
+        <input type="text" class="form-control word exam_word_hangul" id="word" placeholder="단어(한글)">
+        -->
+        <button type="button" class="btn btn-outline-success fist_plus_exam" id="exam_plus">+</button>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary btn-lg" id="submit">추가</button>
+</div>
+<%include file="frame_bottom.html"/>
