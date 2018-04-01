@@ -28,33 +28,37 @@ headers = {
 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.162 Safari/537.36'
 }
 
-while(True):
-    r = requests.get(url, headers=headers)
+#while(True):
+r = requests.get(url, headers=headers)
 
-    html = r.text
+html = r.text
 
-    #rows = curs.fetchall()
+#rows = curs.fetchall()
 
-    soup = BeautifulSoup(html, "lxml")
-    link = soup.find_all("td", { "class" : "t_subject" })
-    for m in link:
-        if(m.find("a", {"class":"icon_pic_n"})):
-            post_number = m.parent.find("td", {"class" : "t_notice"}).string
-            post_title = m.a.string
-            print("post_number = ", post_number)
-            #print("post_title = ", post_title)
+soup = BeautifulSoup(html, "lxml")
+link = soup.find_all("td", { "class" : "t_subject" })
 
-            inner_link = fix_link + m.a.get('href') + "\n"
-            #print(inner_link)
-            r = requests.get(inner_link, headers=headers)
+ccc = 0
+for m in link:
+    if(m.find("a", {"class":"icon_pic_n"})) and ccc == 0:
+        post_number = m.parent.find("td", {"class" : "t_notice"}).string
+        post_title = m.a.string
+        print("post_number = ", post_number)
+        #print("post_title = ", post_title)
 
-            time.sleep(1)
+        inner_link = fix_link + m.a.get('href') + "\n"
+        #print(inner_link)
+        r = requests.get(inner_link, headers=headers)
 
-            inner_html = r.text
-            soup = BeautifulSoup(inner_html, "lxml")
-            link2 = soup.find_all("li", { "class" : "icon_pic" })
-            cnt = 0
-            for n in link2:
+        #time.sleep(5)
+
+        inner_html = r.text
+        soup = BeautifulSoup(inner_html, "lxml")
+        link2 = soup.find_all("li", { "class" : "icon_pic" })
+        cnt = 0
+        lock = 0
+        for n in link2:
+            if lock == 0:
                 pure_file_name = n.a.string
                 file_link = n.a.get('href')
                 #print("pure_file_name = " + pure_file_name.encode('utf-8'))
@@ -95,3 +99,5 @@ while(True):
                 except BaseException:
                     print("error!!!")
                 cnt += 1
+                lock += 1
+                ccc += 1

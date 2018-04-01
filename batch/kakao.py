@@ -81,38 +81,34 @@ if __name__ == "__main__":
     #args = parser.parse_args()
     #detect_adult(args.image_url)
   
-    while(True):
-        try:
-            curs = conn.cursor()
-            sql = '''
-                select file_name
-                from picture
-                where normal is null or soft is null or adult is null;
-            '''
-            curs.execute(sql)
-            rows = curs.fetchall()
-            print(len(rows))
-        except BaseException:
-            pass
-        if len(rows) != 0:
-            rows = list(rows)
-            print(rows)
+    try:
+        curs = conn.cursor()
+        sql = '''
+            select file_name
+            from picture
+            where normal is null or soft is null or adult is null;
+        '''
+        curs.execute(sql)
+        rows = curs.fetchall()
+        print(len(rows))
+    except BaseException:
+        pass
+    if len(rows) != 0:
+        rows = list(rows)
+        print(rows)
 
-            for i in range(0, len(rows)):
-                time.sleep(5)
-                try:
-                    url = "http://selectahn.iptime.org/collect/" + rows[i][0]
-                    parser = argparse.ArgumentParser(description='Classify adult image.')
-                    parser.add_argument('image_url', type=str, nargs='?', default=url)
-                    args = parser.parse_args()
-                    print(url)
-                    FILENAME = rows[i][0]
-                    detect_adult(args.image_url)
-                    print("---------------------------------->")
+        for i in range(0, len(rows)):
+            #time.sleep(1)
+            try:
+                url = "http://selectahn.iptime.org/collect/" + rows[i][0]
+                parser = argparse.ArgumentParser(description='Classify adult image.')
+                parser.add_argument('image_url', type=str, nargs='?', default=url)
+                args = parser.parse_args()
+                print(url)
+                FILENAME = rows[i][0]
+                detect_adult(args.image_url)
+                print("---------------------------------->")
 
-                except BaseException:
-                    print("error")
-            conn.close()
-        else:
-            print("time sleep 60 sec")
-            time.sleep(60)
+            except BaseException:
+                print("error")
+        conn.close()
