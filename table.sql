@@ -63,3 +63,14 @@ adult varchar(100)
 
 ALTER TABLE picture convert to charset utf8;
 
+create table dc_japanese(
+    id int primary key AUTO_INCREMENT,
+    data_num varchar(500),
+    data_subject varchar(500),
+    data_content varchar(500),
+    data_writer varchar(500),
+    data_ip varchar(500),
+    regist_date datetime default now()
+);
+
+ALTER TABLE dc_japanese convert to charset utf8;
