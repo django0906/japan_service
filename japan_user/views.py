@@ -110,7 +110,74 @@ def movie(request, page_id=None):
         subject = '君と100回目の恋'
     elif page_id == '9':
         movie = 'h.mp4'
-        subject = 'airi no eiga'
+        subject = '愛梨の映画（殺人者の記憶方法）'
+    elif page_id == '10':
+        movie = 'i.mp4'
+        subject = '愛梨の映画（神と一緒に）'
+    elif page_id == '11':
+        movie = 'oldboy.mp4'
+        subject = '愛梨の映画（オールドボーイ）'
+    elif page_id == '12':
+        movie = '7ban.mp4'
+        subject = '愛梨の映画（7番部屋のプレゼント）'
+    elif page_id == '13':
+        movie = 'guu.mp4'
+        subject = '愛梨の映画（東京）'
+    elif page_id == '14':
+        movie = 'p3.mp4'
+        subject = '愛梨の映画（peace of cake）'
+    elif page_id == '15':
+        movie = 'hhh3.mp4'
+        subject = '愛梨の映画（hirugao）'
+
+    elif page_id == '801':
+        movie = 'r1.mp4'
+        subject = '아이리드라마（라디오로맨스 1화）'
+    elif page_id == '802':
+        movie = 'r2.mp4'
+        subject = '아이리드라마（라디오로맨스 2화）'
+    elif page_id == '803':
+        movie = 'r3.mp4'
+        subject = '아이리드라마（라디오로맨스 3화）'
+    elif page_id == '804':
+        movie = 'r4.mp4'
+        subject = '아이리드라마（라디오로맨스 4화）'
+    elif page_id == '805':
+        movie = 'r5.mp4'
+        subject = '아이리드라마（라디오로맨스 5화）'
+    elif page_id == '806':
+        movie = 'r6.mp4'
+        subject = '아이리드라마（라디오로맨스 6화）'
+    elif page_id == '807':
+        movie = 'r7.mp4'
+        subject = '아이리드라마（라디오로맨스 7화）'
+    elif page_id == '808':
+        movie = 'r8.mp4'
+        subject = '아이리드라마（라디오로맨스 8화）'
+    elif page_id == '809':
+        movie = 'r9.mp4'
+        subject = '아이리드라마（라디오로맨스 9화）'
+    elif page_id == '810':
+        movie = 'r10.mp4'
+        subject = '아이리드라마（라디오로맨스 10화）'
+    elif page_id == '811':
+        movie = 'r11.mp4'
+        subject = '아이리드라마（라디오로맨스 11화）'
+    elif page_id == '812':
+        movie = 'r12.mp4'
+        subject = '아이리드라마（라디오로맨스 12화）'
+    elif page_id == '813':
+        movie = 'r13.mp4'
+        subject = '아이리드라마（라디오로맨스 13화）'
+    elif page_id == '814':
+        movie = 'r14.mp4'
+        subject = '아이리드라마（라디오로맨스 14화）'
+    elif page_id == '815':
+        movie = 'r15.mp4'
+        subject = '아이리드라마（라디오로맨스 15화）'
+    elif page_id == '816':
+        movie = 'r16.mp4'
+        subject = '아이리드라마（라디오로맨스 16화）'
 
     print("movie --------------->")
     print(movie)
